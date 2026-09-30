@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transactions — Reen Bank</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["DM Sans", "ui-sans-serif", "system-ui", "sans-serif"],
+            },
+            colors: {
+              mint: "#d4f3e7",
+              brand: { DEFAULT: "#33b786", dark: "#279971" },
+              ink: "#252525",
+              copy: "#555555",
+              muted: "#6c6c6c",
+              plum: "#46237a",
+            },
+          },
+        },
+      };
+      bg-white/90
+    </script> -->
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./output.css" />
+  </head>
+  <body class="font-sans text-ink bg-white/90 min-h-screen">
+    <div class="flex min-h-screen">
+      <!-- =========================== SIDEBAR =========================== -->
+      <aside
+        id="sidebar"
+        class="fixed lg:static inset-y-0 left-0 z-50 w-72 bg-white/90 p-6 flex flex-col items-center -translate-x-full lg:translate-x-0 transition-transform"
+      >
+        <a href="dashboard.html" class="flex items-center gap-3 mb-10 px-2">
+          <!-- IMAGE: Reen Bank logo mark -->
+          <img src="./assets/images/logo.png" alt="logo" />
+        </a>
+        <nav
+          class="flex flex-col gap-8 space-y-1 my-auto"
+          aria-label="App navigation"
+        >
+          <a
+            href="dashboard.html"
+            class="side-link active flex items-center justify-between gap-8"
+          >
+            <img src="./assets/images/overview-icon.png" alt="" />
+            Overview
+          </a>
+          <a
+            href="accounts.html"
+            class="side-link flex items-center justify-between gap-8"
+          >
+            <img src="./assets/images/accounts-icon.png" alt="" />
+            Accounts
+          </a>
+          <a
+            href="transactions.html"
+            class="side-link flex items-center justify-between gap-8"
+          >
+            <img src="./assets/images/transactions-icon.png" alt="" />
+            Transactions
+          </a>
+          <a
+            href="profile.html"
+            class="side-link flex items-center justify-between gap-8"
+          >
+            <img src="./assets/images/profile-icon.png" alt="" />
+            Profile
+          </a>
+        </nav>
+        <button
+          id="openLogout"
+          class="side-link w-full text-red-500 hover:bg-red-50 flex justify-center items-center font-bold text-center gap-2"
+        >
+          <!-- <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-5 h-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"
+            />
+          </svg> -->
+          <span class="text-5xl mb-2"> ← </span>Logout
+        </button>
+      </aside>
+      <div
+        id="sidebarBackdrop"
+        class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden"
+      ></div>
+
+      <!-- =========================== MAIN =========================== -->
+      <div class="flex-1 min-w-0">
+        <header
+          class="sticky top-0 z-30 bg-white/90 backdrop-blur border-b border-black/5"
+        >
+          <div class="h-20 px-5 lg:px-10 flex items-center gap-3">
+            <button
+              id="menuToggle"
+              class="lg:hidden p-2 rounded-lg hover:bg-black/5"
+              aria-label="Open menu"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-6 h-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+            <h1 class="text-xl sm:text-2xl font-extrabold">Transactions</h1>
+          </div>
+        </header>
+
+        <main class="p-5 lg:p-10 space-y-6">
+          <!-- account tabs -->
+          <div id="accountTabs" class="flex flex-wrap gap-3"></div>
+
+          <!-- account summary card -->
+          <section
+            class="bg-white rounded-2xl card-shadow p-6 flex items-center justify-between flex-wrap gap-4 border-2 border-gray-300 rounded-2xl"
+          >
+            <div>
+              <p class="text-muted text-sm mb-1" id="tabAccountName">—</p>
+              <p
+                class="balance-value text-2xl font-extrabold"
+                id="tabAccountBalance"
+              >
+                ₦ 0.00
+              </p>
+            </div>
+            <button
+              id="eyeToggle"
+              class="w-10 h-10 rounded-lg border border-black/10 flex items-center justify-center hover:bg-black/5"
+              aria-label="Show or hide balance"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"
+                />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </button>
+          </section>
+
+          <!-- transaction list -->
+          <section
+            class="bg-white rounded-2xl card-shadow overflow-hidden border-2 border-gray-300"
+          >
+            <div
+              class="hidden sm:grid grid-cols-[1fr_auto_auto] gap-4 px-6 py-4 text-sm font-bold text-muted border-b border-black/5"
+            >
+              <span>Description</span>
+              <span>Date</span>
+              <span class="text-right">Amount</span>
+            </div>
+            <div id="txList" class="divide-y divide-black/5"></div>
+            <p id="txEmpty" class="hidden px-6 py-10 text-center text-muted">
+              No transactions yet for this account.
+            </p>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <div id="logoutOverlay" class="overlay">
+      <div
+        class="modal-card bg-white rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl shadow-green-300"
+      >
+        <p class="font-bold text-lg mb-8">Are you sure you want to Logout?</p>
+        <div class="flex gap-4">
+          <button
+            class="btn-outline flex-1 h-14! bg-gray-300 rounded-2xl p-4"
+            onclick="closeOverlay('logoutOverlay')"
+          >
+            Cancel
+          </button>
+          <button
+            class="btn-primary flex-1 bg-[#33b786] hover:bg-[#279971] font-medium rounded-2xl p-4 text-white"
+            id="confirmLogout"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="./js/app.js"></script>
+    <script src="./js/transactions.js"></script>
+  </body>
+</html>

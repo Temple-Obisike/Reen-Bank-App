@@ -1,0 +1,198 @@
+/* ==========================================================================
+   Reen Bank — custom styles
+   These are hand-written classes that Tailwind doesn't provide out of the
+   box. Your Tailwind utility classes (bg-green-500, rounded-2xl, p-4, etc.)
+   keep working exactly as before — this file just adds the extra bits.
+   ========================================================================== */
+
+/* ---------- design tokens (colors used across the site) ---------- */
+:root {
+  --brand: #33b786;
+  --brand-dark: #279971;
+  --mint: #d4f3e7;
+  --ink: #252525;
+  --copy: #555555;
+  --muted: #6c6c6c;
+}
+
+/* ---------- modal / overlay ----------
+   This is the important one — it's what makes your modals hidden until
+   you click a button, instead of showing at the bottom of the page.
+------------------------------------------------------------------------ */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(16, 24, 32, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 60;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+}
+.overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.overlay .modal-card {
+  transform: translateY(12px) scale(0.98);
+  transition: transform 0.18s ease;
+}
+.overlay.open .modal-card {
+  transform: translateY(0) scale(1);
+}
+
+/* ---------- reusable card shadow ---------- */
+.card-shadow {
+  box-shadow: 0 0 50px 0.5px rgba(0, 0, 0, 0.05);
+}
+
+/* ---------- sidebar nav links ---------- */
+.side-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  color: #8a93a6;
+  font-weight: 500;
+  font-size: 16px;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+.side-link:hover {
+  background: #f1fdf8;
+  color: var(--brand);
+}
+.side-link.active {
+  background: var(--brand);
+  color: #fff;
+}
+
+/* ---------- form fields (used on login/register/reset-password) ---------- */
+.field-wrap {
+  position: relative;
+}
+.field-input {
+  width: 100%;
+  height: 64px;
+  border-radius: 12px;
+  border: 1px solid #8a8a8a;
+  background: #fff;
+  box-shadow: 0 0 50px 0.5px rgba(0, 0, 0, 0.05);
+  padding: 0 52px 0 20px;
+  font-size: 16px;
+  color: var(--ink);
+}
+.field-input::placeholder {
+  color: #b8b8b8;
+}
+.field-input:focus {
+  border-color: var(--brand);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(51, 183, 134, 0.15);
+}
+.field-label {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ink);
+  margin-bottom: 8px;
+  display: block;
+}
+.field-icon {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  color: #8a8a8a;
+  pointer-events: none;
+}
+
+/* ---------- buttons ---------- */
+/* .btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--brand);
+  color: #fff;
+  font-weight: 700;
+  font-size: 18px;
+  border-radius: 12px;
+  height: 64px;
+  width: 100%;
+  transition: background 0.15s ease;
+}
+.btn-primary:hover {
+  background: var(--brand-dark);
+}
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #d1d5dc;
+  color: white;
+  font-weight: 700;
+  font-size: 18px;
+  border: 3px solid var(--brand);
+  border-radius: 12px;
+  height: 64px;
+  padding: 0 24px;
+  transition: background 0.15s ease;
+}
+.btn-outline:hover {
+  background: #c3ecdc;
+} */
+
+/* ---------- balance show/hide (used with the eye-icon buttons) ---------- */
+.balance-hidden .balance-value {
+  filter: blur(7px);
+  user-select: none;
+}
+
+/* ---------- image placeholder boxes ---------- */
+.img-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: repeating-linear-gradient(
+    45deg,
+    #f3f4f6,
+    #f3f4f6 10px,
+    #e9eafc 10px,
+    #e9eafc 20px
+  );
+  border: 2px dashed #9ca3af;
+  color: #4b5563;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 6px;
+}
+
+/* ---------- FAQ accordion (used on the landing page) ---------- */
+.accordion-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease;
+}
+
+/* ---------- accessibility: skip-to-content link ---------- */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--brand);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 0 0 8px 0;
+  z-index: 100;
+}
+.skip-link:focus {
+  left: 0;
+}

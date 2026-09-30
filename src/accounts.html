@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accounts — Reen Bank</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["DM Sans", "ui-sans-serif", "system-ui", "sans-serif"],
+            },
+            colors: {
+              mint: "#d4f3e7",
+              brand: { DEFAULT: "#33b786", dark: "#279971" },
+              ink: "#252525",
+              copy: "#555555",
+              muted: "#6c6c6c",
+              plum: "#46237a",
+            },
+          },
+        },
+      };
+    </script> -->
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./output.css" />
+  </head>
+  <body class="font-sans text-ink bg-white/90 min-h-screen">
+    <div class="flex min-h-screen">
+      <!-- =========================== SIDEBAR =========================== -->
+      <aside
+        id="sidebar"
+        class="fixed lg:static inset-y-0 left-0 z-50 w-72 bg-white/90 p-6 flex flex-col items-center -translate-x-full lg:translate-x-0 transition-transform"
+      >
+        <a href="dashboard.html" class="flex items-center gap-3 mb-10 px-2">
+          <!-- IMAGE: Reen Bank logo mark -->
+          <img src="./assets/images/logo.png" alt="logo" />
+        </a>
+        <nav
+          class="flex flex-col gap-8 space-y-1 my-auto"
+          aria-label="App navigation"
+        >
+          <a
+            href="dashboard.html"
+            class="side-link active flex items-center justify-between gap-8"
+          >
+            <img src="./assets/images/overview-icon.png" alt="" />
+            Overview
+          </a>
+          <a
+            href="accounts.html"
+            class="side-link flex items-center justify-between gap-8"
+          >
+            <img src="./assets/images/accounts-icon.png" alt="" />
+            Accounts
+          </a>
+          <a
+            href="transactions.html"
+            class="side-link flex items-center justify-between gap-8"
+          >
+            <img src="./assets/images/transactions-icon.png" alt="" />
+            Transactions
+          </a>
+          <a
+            href="profile.html"
+            class="side-link flex items-center justify-between gap-8"
+          >
+            <img src="./assets/images/profile-icon.png" alt="" />
+            Profile
+          </a>
+        </nav>
+        <button
+          id="openLogout"
+          class="side-link w-full text-red-500 hover:bg-red-50 flex justify-center items-center font-bold text-center gap-2"
+        >
+          <!-- <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-5 h-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"
+            />
+          </svg> -->
+          <span class="text-5xl mb-2"> ← </span>Logout
+        </button>
+      </aside>
+      <div
+        id="sidebarBackdrop"
+        class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden"
+      ></div>
+
+      <!-- =========================== MAIN =========================== -->
+      <div class="flex-1 min-w-0">
+        <header
+          class="sticky top-0 z-30 bg-white/90 backdrop-blur border-b border-black/5"
+        >
+          <div
+            class="h-20 px-5 lg:px-10 flex items-center justify-between gap-4"
+          >
+            <div class="flex items-center gap-3">
+              <button
+                id="menuToggle"
+                class="lg:hidden p-2 rounded-lg hover:bg-black/5"
+                aria-label="Open menu"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-6 h-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              </button>
+              <h1 class="text-xl sm:text-2xl font-extrabold">Accounts</h1>
+            </div>
+            <!-- <button
+              id="addAccountBtn"
+              class="btn-primary !w-auto px-6 !h-12 gap-2"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path stroke-linecap="round" d="M12 5v14M5 12h14" />
+              </svg>
+              Add Account
+            </button> -->
+          </div>
+        </header>
+
+        <main class="p-5 lg:p-10">
+          <div
+            id="accountList"
+            class="grid sm:grid-cols-2 xl:grid-cols-3 gap-6"
+          ></div>
+        </main>
+      </div>
+    </div>
+
+    <!-- =========================== MODALS =========================== -->
+    <div id="logoutOverlay" class="overlay">
+      <div
+        class="modal-card bg-white rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl shadow-green-300"
+      >
+        <p class="font-bold text-lg mb-8">Are you sure you want to Logout?</p>
+        <div class="flex gap-4">
+          <button
+            class="btn-outline flex-1 h-14! bg-gray-300 rounded-2xl p-4"
+            onclick="closeOverlay('logoutOverlay')"
+          >
+            Cancel
+          </button>
+          <button
+            class="btn-primary flex-1 bg-[#33b786] hover:bg-[#279971] font-medium rounded-2xl p-4 text-white"
+            id="confirmLogout"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="fundOverlay" class="overlay">
+      <div
+        class="modal-card bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl shadow-green-300"
+      >
+        <h3 class="font-extrabold text-2xl mb-6">Fund Wallet</h3>
+        <form id="fundForm" novalidate class="space-y-5">
+          <input type="hidden" id="fundAccountId" />
+          <p class="text-sm text-muted -mt-2" id="fundAccountName"></p>
+          <div>
+            <label class="field-label" for="fundAmount">Amount</label>
+            <input
+              id="fundAmount"
+              type="number"
+              min="1"
+              step="0.01"
+              required
+              placeholder="100,000"
+              class="field-input !px-5"
+            />
+          </div>
+          <p class="text-xs text-muted">
+            Demo mode: funds are simulated instantly, no real card is charged.
+          </p>
+          <div class="flex gap-4 pt-2">
+            <button
+              type="button"
+              class="btn-outline flex-1 !h-14 bg-gray-300 rounded-2xl p-4"
+              onclick="closeOverlay('fundOverlay')"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="btn-primary flex-1 bg-[#33b786] hover:bg-[#279971] font-medium rounded-2xl p-4 text-white"
+            >
+              Fund
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="withdrawOverlay" class="overlay">
+      <div
+        class="modal-card bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl shadow-green-300"
+      >
+        <h3 class="font-extrabold text-2xl mb-6">Withdraw</h3>
+        <form id="withdrawForm" novalidate class="space-y-5">
+          <input type="hidden" id="withdrawAccountId" />
+          <p class="text-sm text-muted -mt-2" id="withdrawAccountName"></p>
+          <div>
+            <label class="field-label" for="withdrawAmount">Amount</label>
+            <input
+              id="withdrawAmount"
+              type="number"
+              min="1"
+              step="0.01"
+              required
+              placeholder="100,000"
+              class="field-input !px-5"
+            />
+          </div>
+          <div
+            id="withdrawError"
+            class="hidden rounded-xl bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3"
+          ></div>
+          <div class="flex gap-4 pt-2">
+            <button
+              type="button"
+              class="btn-outline flex-1 !h-14 bg-gray-300 rounded-2xl p-4"
+              onclick="closeOverlay('withdrawOverlay')"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="btn-primary flex-1 bg-[#33b786] hover:bg-[#279971] font-medium rounded-2xl p-4 text-white"
+            >
+              Withdraw
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="addAccountOverlay" class="overlay">
+      <div
+        class="modal-card bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl shadow-green-300"
+      >
+        <h3 class="font-extrabold text-2xl mb-6">Add Account</h3>
+        <form id="addAccountForm" novalidate class="space-y-5">
+          <div>
+            <label class="field-label" for="newAccName">Account Name</label>
+            <input
+              id="newAccName"
+              type="text"
+              required
+              placeholder="Enter name"
+              class="field-input !px-5"
+            />
+          </div>
+          <div>
+            <label class="field-label" for="newAccDesc"
+              >Short Description</label
+            >
+            <textarea
+              id="newAccDesc"
+              rows="3"
+              class="w-full rounded-xl border border-[#8a8a8a] px-5 py-3 card-shadow"
+              placeholder="Description"
+            ></textarea>
+          </div>
+          <div class="flex gap-4 pt-2">
+            <button
+              type="button"
+              class="btn-outline flex-1 !h-14 bg-gray-300 rounded-2xl p-4"
+              onclick="closeOverlay('addAccountOverlay')"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="btn-primary flex-1 bg-[#33b786] hover:bg-[#279971] font-medium rounded-2xl p-4 text-white"
+            >
+              Add
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="successOverlay" class="overlay">
+      <div
+        class="modal-card bg-white rounded-3xl p-10 max-w-sm w-full text-center shadow-2xl shadow-green-300"
+      >
+        <!-- IMAGE: confirmation tick animation/illustration -->
+        <span
+          class="img-slot w-20 h-20 rounded-full mx-auto mb-6"
+          data-caption="Confirmed tick animation"
+          >✓</span
+        >
+        <p id="successMessage" class="font-bold text-lg mb-8">Done!</p>
+        <button
+          class="btn-primary bg-[#33b786] hover:bg-[#279971] font-medium w-full text-white rounded-2xl p-4"
+          onclick="closeOverlay('successOverlay')"
+        >
+          Go Back
+        </button>
+      </div>
+    </div>
+
+    <script src="./js/app.js"></script>
+    <script src="./js/accounts.js"></script>
+  </body>
+</html>
