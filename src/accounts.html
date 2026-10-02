@@ -157,6 +157,21 @@
             id="accountList"
             class="grid sm:grid-cols-2 xl:grid-cols-3 gap-6"
           ></div>
+          <!-- transactions -->
+          <div class="bg-white rounded-2xl card-shadow p-6 mt-6">
+            <div class="flex items-center justify-between mb-4">
+              <p class="font-bold text-lg">Transactions</p>
+              <a
+                href="transactions.html"
+                class="text-[#33b786] font-bold text-sm hover:underline"
+                >View All →</a
+              >
+            </div>
+            <div id="txList" class="divide-y divide-gray-100"></div>
+            <p id="txEmpty" class="hidden text-center text-muted py-6">
+              No transactions yet.
+            </p>
+          </div>
         </main>
       </div>
     </div>

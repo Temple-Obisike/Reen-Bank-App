@@ -1,6 +1,69 @@
 /* Accounts page (accounts.html) — full account list, fund/withdraw/add-account modals */
 
 const user = RB.requireAuth();
+
+const RANDOM_NAMES = [
+  "Oluwaben Jamin",
+  "Ngozi Eze",
+  "Tunde Bakare",
+  "Amara Chukwu",
+  "Femi Adeyemi",
+  "Chiamaka Obi",
+  "Segun Alabi",
+  "Ifeoma Nwosu",
+];
+
+function renderTransactionList() {
+  const transactions = RB.getTransactions(user.id); // all accounts, not just one
+  const txListEl = document.getElementById("txList");
+  const txEmptyEl = document.getElementById("txEmpty");
+
+  if (transactions.length === 0) {
+    txEmptyEl.classList.remove("hidden");
+    return;
+  }
+  txEmptyEl.classList.add("hidden");
+
+  txListEl.innerHTML = transactions
+    .map((t) => {
+      const isCredit = t.type === "credit";
+
+      const iconColor = isCredit ? "bg-[#33b786]" : "bg-[#e0525f]";
+      const iconSymbol = isCredit ? "+" : "−";
+      const amountColor = isCredit ? "text-[#33b786]" : "text-[#e0525f]";
+      const sign = isCredit ? "+" : "-";
+      const method = isCredit ? "Direct Pay" : "Bank Transfer";
+      const badgeColor = isCredit ? "bg-[#33b786]" : "bg-[#e0525f]";
+
+      // the only randomized value — a display name, since transactions don't store one
+      const name =
+        RANDOM_NAMES[Math.floor(Math.random() * RANDOM_NAMES.length)];
+
+      const dateStr =
+        new Date(t.date).toLocaleDateString("en-GB", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        }) +
+        " – " +
+        new Date(t.date).toLocaleTimeString("en-GB", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+
+      return `
+        <div class="grid grid-cols-[auto_1fr_1fr_1fr_auto_auto] gap-4 items-center py-3">
+          <span class="w-10 h-10 rounded-full ${iconColor} text-white flex items-center justify-center font-bold text-lg shrink-0">${iconSymbol}</span>
+          <span class="font-medium text-sm">${name}</span>
+          <span class="text-muted text-sm">${method}</span>
+          <span class="text-muted text-sm">${dateStr}</span>
+          <span class="font-bold text-sm ${amountColor} text-right">${sign} ${RB.fmt(t.amount)}</span>
+          <span class="${badgeColor} text-white font-bold text-sm px-5 py-2 rounded-full min-w-[110px] text-center">Completed</span>
+        </div>`;
+    })
+    .join("");
+}
+
 if (user) {
   function renderAccounts() {
     const accounts = RB.getAccounts(user.id);
@@ -58,6 +121,7 @@ if (user) {
     );
   }
   renderAccounts();
+  renderTransactionList();
 
   document
     .getElementById("addAccountBtn")
@@ -75,6 +139,7 @@ if (user) {
         `${RB.fmt(amount)} has been added to your Wallet!`;
       openOverlay("successOverlay");
       renderAccounts();
+      renderTransactionList();
     }
   });
 
@@ -96,6 +161,7 @@ if (user) {
       `${RB.fmt(amount)} has been sent to your Bank Account!`;
     openOverlay("successOverlay");
     renderAccounts();
+    renderTransactionList();
   });
 
   document.getElementById("addAccountForm").addEventListener("submit", (e) => {

@@ -2,7 +2,8 @@
 
 // pre-fill email if it arrived from the landing page footer form
 const params = new URLSearchParams(window.location.search);
-if (params.get("email")) document.getElementById("email").value = params.get("email");
+if (params.get("email"))
+  document.getElementById("email").value = params.get("email");
 
 document.getElementById("registerForm").addEventListener("submit", (e) => {
   e.preventDefault();
@@ -13,7 +14,8 @@ document.getElementById("registerForm").addEventListener("submit", (e) => {
   const errorBox = document.getElementById("formError");
 
   if (!terms) {
-    errorBox.textContent = "Please agree to the Terms, Privacy Policy and Fees to continue.";
+    errorBox.textContent =
+      "Please agree to the Terms, Privacy Policy and Fees to continue.";
     errorBox.classList.remove("hidden");
     return;
   }
@@ -28,5 +30,5 @@ document.getElementById("registerForm").addEventListener("submit", (e) => {
     errorBox.classList.remove("hidden");
     return;
   }
-  window.location.href = "dashboard.html?welcome=1";
+  window.location.href = "otp.html?email=" + encodeURIComponent(email);
 });

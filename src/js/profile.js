@@ -39,6 +39,43 @@ if (user) {
   });
 }
 
+// "show all transactions" = call RB.getTransactions with only userId,
+// no accountId, so it isn't filtered down to one account
+const allTransactions = RB.getTransactions(user.id);
+const txListEl = document.getElementById("txList");
+const txEmptyEl = document.getElementById("txEmpty");
+
+if (allTransactions.length === 0) {
+  txEmptyEl.classList.remove("hidden");
+} else {
+  txEmptyEl.classList.add("hidden");
+  txListEl.innerHTML = allTransactions
+    .map((t) => {
+      const isCredit = t.type === "credit";
+      const sign = isCredit ? "+" : "-";
+      const color = isCredit ? "text-[#33b786]" : "text-red-500";
+      const dateStr =
+        new Date(t.date).toLocaleDateString("en-GB", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        }) +
+        " – " +
+        new Date(t.date).toLocaleTimeString("en-GB", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+
+      return `
+        <div class="grid grid-cols-[1fr_auto_auto] gap-4 items-center py-3">
+          <span class="font-medium text-sm">${t.label}</span>
+          <span class="text-muted text-xs">${dateStr}</span>
+          <span class="font-bold text-sm ${color}">${sign} ${RB.fmt(t.amount)}</span>
+        </div>`;
+    })
+    .join("");
+}
+
 document
   .getElementById("openLogout")
   .addEventListener("click", () => openOverlay("logoutOverlay"));

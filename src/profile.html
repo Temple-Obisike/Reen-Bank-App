@@ -251,6 +251,21 @@
               </div>
               <div class="font-bold text-2xl" id="mainAccountBalance">$10</div>
             </div>
+            <div class="bg-white rounded-2xl card-shadow p-6 mt-6">
+              <div class="flex items-center justify-between mb-4">
+                <p class="font-bold text-lg">Transactions</p>
+                <a
+                  href="transactions.html"
+                  class="text-[#33b786] font-bold text-lg"
+                  aria-label="View all transactions"
+                  >→</a
+                >
+              </div>
+              <div id="txList" class="divide-y divide-gray-100"></div>
+              <p id="txEmpty" class="hidden text-center text-muted py-6">
+                No transactions yet.
+              </p>
+            </div>
           </div>
         </main>
       </div>
@@ -277,8 +292,6 @@
         </div>
       </div>
     </div>
-
-
 
     <script src="./js/app.js"></script>
     <script src="./js/profile.js"></script>

@@ -7,7 +7,7 @@
      - transactions (auto-generated on fund/withdraw)
      - profile edit
    ========================================================================== */
-   
+
 // automatically highlight whichever sidebar link matches the current page
 document.querySelectorAll(".side-link").forEach((link) => {
   const linkPage = link.getAttribute("href");
@@ -79,24 +79,24 @@ const RB = (() => {
 
   function seedAccountsForUser(db, userId) {
     const starter = [
-      { id: uid(), userId, name: "Main Account", balance: 250000 },
-      { id: uid(), userId, name: "School Savings", balance: 84000 },
-      { id: uid(), userId, name: "Holiday Plan", balance: 40500 },
+      { id: uid(), userId, name: "Main Account", balance: 0 },
+      { id: uid(), userId, name: "School Savings", balance: 0 },
+      { id: uid(), userId, name: "Holiday Plan", balance: 0 },
     ];
     db.accounts.push(...starter);
-    starter.forEach((a, i) => {
-      db.transactions.push({
-        id: uid(),
-        userId,
-        accountId: a.id,
-        type: "credit",
-        label: "Opening balance",
-        amount: a.balance,
-        date: new Date(
-          Date.now() - (starter.length - i) * 86400000,
-        ).toISOString(),
-      });
-    });
+    // starter.forEach((a, i) => {
+    //   db.transactions.push({
+    //     id: uid(),
+    //     userId,
+    //     accountId: a.id,
+    //     type: "credit",
+    //     label: "Opening balance",
+    //     amount: a.balance,
+    //     date: new Date(
+    //       Date.now() - (starter.length - i) * 86400000,
+    //     ).toISOString(),
+    //   });
+    // });
   }
 
   function register({ name, email, password }) {
