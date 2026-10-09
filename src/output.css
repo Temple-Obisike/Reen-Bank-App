@@ -642,6 +642,9 @@
   :where(.divide-gray-100 > :not(:last-child)) {
     border-color: var(--color-gray-100);
   }
+  :where(.divide-red-500 > :not(:last-child)) {
+    border-color: var(--color-red-500);
+  }
   .overflow-hidden {
     overflow: hidden;
   }
@@ -785,9 +788,6 @@
       background-color: color-mix(in oklab, var(--color-black) 40%, transparent);
     }
   }
-  .bg-blue-500 {
-    background-color: var(--color-blue-500);
-  }
   .bg-gray-300 {
     background-color: var(--color-gray-300);
   }
@@ -802,9 +802,6 @@
   }
   .bg-purple-300 {
     background-color: var(--color-purple-300);
-  }
-  .bg-purple-500 {
-    background-color: var(--color-purple-500);
   }
   .bg-red-50 {
     background-color: var(--color-red-50);
@@ -1242,9 +1239,6 @@
     .sm\:grid-cols-\[1fr_auto_auto\] {
       grid-template-columns: 1fr auto auto;
     }
-    .sm\:flex-col {
-      flex-direction: column;
-    }
     .sm\:flex-row {
       flex-direction: row;
     }
@@ -1288,6 +1282,9 @@
     }
     .md\:flex-row {
       flex-direction: row;
+    }
+    .md\:justify-between {
+      justify-content: space-between;
     }
     .md\:text-2xl {
       font-size: var(--text-2xl);

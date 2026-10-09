@@ -52,7 +52,7 @@ function renderTransactionList() {
         });
 
       return `
-        <div class="grid grid-cols-[auto_1fr_1fr_1fr_auto_auto] gap-4 items-center py-3">
+        <div class="flex flex-wrap justify-between gap-4 items-center py-3">
           <span class="w-10 h-10 rounded-full ${iconColor} text-white flex items-center justify-center font-bold text-lg shrink-0">${iconSymbol}</span>
           <span class="font-medium text-sm">${name}</span>
           <span class="text-muted text-sm">${method}</span>
